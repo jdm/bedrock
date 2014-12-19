@@ -710,6 +710,7 @@ MINIFY_BUNDLES = {
             'js/firefox/sync-old.js',
         ),
         'firefox_hello': (
+            'js/firefox/australis/australis-uitour.js',
             'js/libs/socialshare.min.js',
             'js/firefox/hello.js',
         ),

@@ -41,6 +41,10 @@
             content: none;
         }
     }
+
+    h2 {
+        padding-top: 48px;
+    }
 }
 
 // Common styles
@@ -62,7 +66,7 @@ main {
     }
 }
 
-h1 {
+.h1 {
     .font-size(50px);
 }
 
@@ -74,7 +78,7 @@ h1 {
     .font-size(28px);
 }
 
-h1,
+.h1,
 .h2,
 .h3 {
     .open-sans-light();
@@ -83,41 +87,120 @@ h1,
     line-height: 1.2;
 }
 
+.try-hello {
+    display: none;
+    text-align: center;
+    .border-radius(6px);
+    text-transform: uppercase;
+    .font-size(14px);
+    font-weight: bold;
+    padding: 16px 4px;
+    cursor: pointer;
+    .transition(all 0.3s ease);
+}
+
+// Share
+
+#share-wrapper {
+    position: absolute;
+    z-index: 10;
+    overflow: visible;
+    top: 70px;
+    left: 50%;
+    margin-left: 270px;
+    width: 200px;
+    text-align: right;
+
+    .socialshare {
+        & > div > a {
+            background-image: url(/media/img/firefox/hello/sprite-share.png);
+            color: #2983c8;
+
+            span {
+                border-color: #2983c8;
+            }
+
+            &:hover,
+            &:focus {
+                background-position: 0 8px;
+                color: #2983c8;
+
+                span {
+                    border-color: #2983c8;
+                }
+            }
+
+            &:after {
+                background-image: url(/media/img/firefox/hello/sprite-share.png);
+                background-position: 4px -19px;
+            }
+        }
+
+        &.open > div > a{
+            background-position: 0 8px;
+
+            &:after {
+                background-position: 5px -17px;
+            }
+        }
+
+        #share-options {
+            left: auto;
+            right: 0;
+            width: 85px;
+
+            ul {
+                text-align: left;
+            }
+        }
+    }
+}
+
+html[dir="rtl"] {
+    #share-wrapper {
+        margin-left: -460px;
+        text-align: left;
+
+        .socialshare #share-options {
+            right: auto;
+            left: 0;
+            margin-left: 0;
+            width: auto;
+        }
+    }
+}
+
 // Intro
 
 #intro {
     .grainy-sky();
+    padding-bottom: @baseLine * 2;
 
     .container {
-        padding-top: 124px; // compensate for pushing up under tabzilla
+        padding-top: 156px; // compensate for pushing up under tabzilla
     }
 
-    h1,
-    h2 {
+    .h1,
+    .h3 {
         width: 620px;
         margin: 0 auto (@baseLine / 2);
         text-align: center;
     }
 
     .try-hello {
-        display: block;
         width: 220px;
-        text-align: center;
         border: 2px solid #a9bcca;
-        .border-radius(6px);
         background: transparent;
-        text-transform: uppercase;
-        .font-size(14px);
-        font-weight: bold;
         color: #00a0db;
-        padding: 16px 4px;
-        margin: 34px auto 40px;
-        cursor: pointer;
-        .transition(all 0.3s ease);
+        margin: 34px auto 0;
 
         &:hover {
             background: #fff;
             background: rgba(255, 255, 255, 0.3);
+        }
+
+        &.active {
+            display: block;
         }
     }
 }
@@ -196,11 +279,22 @@ h1,
         width: 380px;
         padding-top: 15px;
     }
+
+    .try-hello {
+        width: 280px;
+        border: none;
+        background: @buttonGreen;
+        color: #fff;
+
+        &:hover {
+            background: darken(@buttonGreen, 2%);
+        }
+    }
 }
 
 // default to showing only non-fx copy/cta
 #ctacopy-oldfx,
-#ctacopy-currentfx {
+#ctacopy-hellofx {
     display: none;
 }
 
@@ -262,7 +356,7 @@ h1,
         width: 720px;
     }
 
-    h1 {
+    .h1 {
         .font-size(46px);
     }
 
@@ -272,6 +366,14 @@ h1,
 
     .h3 {
         .font-size(24px);
+    }
+
+    #share-wrapper {
+        margin-left: 160px;
+    }
+
+    html[dir="rtl"] #share-wrapper {
+        margin-left: -350px;
     }
 
     // Features
@@ -340,6 +442,10 @@ h1,
 @media (max-width: @breakTablet) {
     #masthead {
         margin-left: -220px;
+
+        h2 {
+            padding-top: 10px;
+        }
     }
 
     .container {
@@ -348,7 +454,7 @@ h1,
         padding-right: @baseLine;
     }
 
-    h1 {
+    .h1 {
         .font-size(34px);
     }
 
@@ -360,14 +466,24 @@ h1,
         .font-size(20px);
     }
 
+    #share-wrapper {
+        margin-left: 20px;
+    }
+
+    html[dir="rtl"] #share-wrapper {
+        margin-left: -210px;
+    }
+
     // Intro
 
     #intro {
+        padding-bottom: @baseLine;
+
         .container {
-            padding-top: 144px;
+            padding-top: 166px;
         }
 
-        h1,
+        .h1,
         .h3 {
             width: auto;
         }
@@ -437,6 +553,10 @@ h1,
         .cta-wrapper {
             padding-top: 0;
         }
+
+        .try-hello {
+            margin: 0 auto;
+        }
     }
 
     // Video
@@ -480,7 +600,7 @@ h1,
         .font-size(14px);
     }
 
-    h1 {
+    .h1 {
         .font-size(30px);
     }
 
@@ -490,6 +610,10 @@ h1,
 
     .h3 {
         .font-size(20px);
+    }
+
+    #share-wrapper {
+        display: none;
     }
 
     // Features

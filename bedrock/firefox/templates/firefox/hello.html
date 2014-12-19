@@ -1,5 +1,3 @@
-<!-- https://etherpad.mozilla.org/Hello-product-page-content-logic -->
-
 {# This Source Code Form is subject to the terms of the Mozilla Public
  # License, v. 2.0. If a copy of the MPL was not distributed with this
  # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
@@ -37,12 +35,14 @@
 
 {% block content %}
 
+<div id="share-wrapper">
+  {% include 'firefox/includes/social-share.html' %}
+</div>
+
 <main role="main">
   <section id="intro">
     <div class="container">
-      {% include 'firefox/includes/social-share.html' %}
-
-      <h1>{{ _('As easy as saying hello') }}</h1>
+      <h1 class="h1">{{ _('As easy as saying hello') }}</h1>
 
       <h2 class="h3">
         {{ _('Meet Firefox Hello, the easiest way to connect for free over video with anyone, anywhere.') }}
@@ -107,9 +107,9 @@
   <section id="download-try">
     <div class="container">
       <div class="ctacopy-wrapper">
-        <h2 class="h2" id="ctacopy-nonfx">{{ _('Get Firefox and start your first conversation') }}</h2>
-        <h2 class="h2" id="ctacopy-oldfx">{{ _('Update your Firefox to start using Hello') }}</h2>
-        <h2 class="h2" id="ctacopy-currentfx">{{ _('Start your first conversation today') }}</h2>
+        <h2 class="dltry-copy h2" id="ctacopy-nonfx">{{ _('Get Firefox and start your first conversation') }}</h2>
+        <h2 class="dltry-copy h2" id="ctacopy-oldfx">{{ _('Update your Firefox to start using Hello') }}</h2>
+        <h2 class="dltry-copy h2" id="ctacopy-hellofx">{{ _('Start your first conversation today') }}</h2>
       </div>
 
       <div class="cta-wrapper">
