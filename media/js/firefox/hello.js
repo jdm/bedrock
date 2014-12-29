@@ -7,14 +7,30 @@
 
     var $document = $(document);
 
+    var isWideViewport = $(window).width() >= 740;
+    var isIE = /MSIE/.test(navigator.userAgent);
+    var isTrident = /Trident/.test(navigator.userAgent);
+    var isOldOpera= /Presto/.test(navigator.userAgent);
+
+    var supportsSVGAnimation = function() {
+        return supportsInlineSVG() && !isIE && !isTrident && !isOldOpera;
+    };
+
+    var supportsInlineSVG = function() {
+        var div = document.createElement('div');
+        div.innerHTML = '<svg/>';
+        return (div.firstChild && div.firstChild.namespaceURI) === 'http://www.w3.org/2000/svg';
+    };
+
+    if (isWideViewport && supportsSVGAnimation()) {
+        $(w).on('load', function() {
+            $('#animation-stage').addClass('animate');
+        });
+    }
+
     // listen for events in/on Hello menu
     var bindHelloObserver = function() {
-        Mozilla.UITour.observe(function(e, data) {
-            // none of this code seems to fire...
-            console.log(e);
-            console.log(data);
-
-            // untested, as this code block never fires...
+        Mozilla.UITour.observe(function(e) {
             switch (e) {
                 case 'Loop:ChatWindowOpened':
                     w.gaTrack(['_trackEvent', 'hello interactions','productPage','StartConversation-NoTour']);
@@ -23,9 +39,6 @@
                     w.gaTrack(['_trackEvent', 'hello interactions','productPage','CopyLink-NoTour']);
                     break;
             }
-        }, function() {
-            // however, this code does fire, so...?
-            console.log('observing!');
         });
     };
 
