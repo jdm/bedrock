@@ -2,12 +2,18 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-;(function(w, $) {
+;(function(w, $, Modernizr) {
     'use strict';
 
     var $document = $(document);
+    var $introImage = $('#intro-image');
+    var $animationStage = $('#animation-stage');
+    var $videoLink = $('#video-link');
+    var $videoContainer = $('#video-modal');
+    var $video = $('#hello-video');
 
     var isWideViewport = $(window).width() >= 740;
+    var mqIsWide;
     var isIE = /MSIE/.test(navigator.userAgent);
     var isTrident = /Trident/.test(navigator.userAgent);
     var isOldOpera= /Presto/.test(navigator.userAgent);
@@ -22,9 +28,31 @@
         return (div.firstChild && div.firstChild.namespaceURI) === 'http://www.w3.org/2000/svg';
     };
 
-    if (isWideViewport && supportsSVGAnimation()) {
-        $(w).on('load', function() {
-            $('#animation-stage').addClass('animate');
+    if (isWideViewport) {
+        if (supportsSVGAnimation()) {
+            $(w).on('load', function() {
+                $animationStage.addClass('animate wide');
+            });
+        } else {
+            $('body').addClass('no-animation');
+        }
+    } else {
+        if (Modernizr.cssanimations) {
+            $animationStage.addClass('animate mini');
+        } else {
+            $('body').addClass('no-animation');
+        }
+    }
+
+    // resizing the browser with animation just displays the intro image
+    if (typeof matchMedia !== 'undefined') {
+        mqIsWide = matchMedia('(min-width: 760px)');
+
+        mqIsWide.addListener(function() {
+            if ($animationStage.hasClass('animate')) {
+                $animationStage.remove(); // why not?
+                $introImage.css('display', 'block');
+            }
         });
     }
 
@@ -33,10 +61,11 @@
         Mozilla.UITour.observe(function(e) {
             switch (e) {
                 case 'Loop:ChatWindowOpened':
-                    w.gaTrack(['_trackEvent', 'hello interactions','productPage','StartConversation-NoTour']);
+                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'StartConversation-NoTour']);
                     break;
                 case 'Loop:RoomURLCopied':
-                    w.gaTrack(['_trackEvent', 'hello interactions','productPage','CopyLink-NoTour']);
+                    console.log('RoomURLCopied!');
+                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'CopyLink-NoTour']);
                     break;
             }
         });
@@ -96,6 +125,8 @@
                     $document.on('visibilitychange', function() {
                         handleVisibilityChange();
                     });
+
+                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'EligibleView']);
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
@@ -118,4 +149,16 @@
         $('#feature-account').remove();
         $('#feature-getfx').show();
     }
-})(window, window.jQuery);
+
+    $videoLink.on('click', function(e) {
+        e.preventDefault();
+
+        Mozilla.Modal.createModal(this, $videoContainer, {
+            title: 'Hello'
+        });
+    });
+
+    $video.on('play', function() {
+        w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'PlayVideo']);
+    });
+})(window, window.jQuery, window.Modernizr);

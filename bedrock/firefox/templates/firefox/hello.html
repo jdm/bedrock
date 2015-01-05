@@ -14,6 +14,9 @@
 {% endblock %}
 
 {% block js %}
+  <!--[if IE 9]>
+    {{ js('firefox_hello_ie9') }}
+  <![endif]-->
   {{ js('firefox_hello') }}
 {% endblock %}
 
@@ -42,6 +45,9 @@
 <main role="main">
   <section id="intro">
     <div class="container">
+      {#-- No-JS/IE fallback image --#}
+      <h2 id="intro-image">{{ _('Firefox Hello') }}</h2>
+
       <div id="animation-stage">
         <!--[if gt IE 9]><!-->
         <div class="svg-wrapper" id="intro-face-wrapper">
@@ -184,6 +190,7 @@
     </div>{# /.container #}
   </section>
 
+{% if video_url != '' %}
   <section id="video">
     <div class="container">
       <div class="ctacopy-wrapper">
@@ -201,10 +208,19 @@
         </p>
       </div>
       <div class="cta-wrapper">
-        <video src=""></video>
+        <a id="video-link" href="{{ video_url }}.mp4">
+          donde esta mi screenshot?
+        </a>
       </div>
     </div>{# /.container #}
   </section>
+
+  <div id="video-modal-wrapper">
+    <div id="video-modal">
+      {{ video(video_url + '.mp4', video_url + '.webm', id='hello-video') }}
+    </div>
+  </div>
+{% endif %}
 </main>
 
 {% endblock %}

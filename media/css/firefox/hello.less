@@ -187,6 +187,15 @@ html[dir="rtl"] {
         text-align: center;
     }
 
+    #intro-image {
+        .image-replaced();
+        display: block;
+        width: 447px;
+        height: 314px;
+        margin: 0 auto @baseLine;
+        background: url(/media/img/firefox/hello/hello-intro.png) center center no-repeat;
+    }
+
     .try-hello {
         width: 220px;
         border: 2px solid #a9bcca;
@@ -212,14 +221,12 @@ html[dir="rtl"] {
     width: 650px;
     height: 360px;
     margin: 0 auto;
+    display: none;
 
     div {
         position: absolute;
-    }
-
-    .anim-sprite {
-        background-image: url(/media/img/firefox/hello/sprite-animation.png);
-        background-repeat: no-repeat;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 
     #intro-face-wrapper {
@@ -254,7 +261,6 @@ html[dir="rtl"] {
         width: 50px;
         height: 50px;
         opacity: 0;
-        .transition(opacity 0.1s ease 1.2s);
     }
 
     .intro-face-eyeball,
@@ -301,7 +307,6 @@ html[dir="rtl"] {
         height: 356px;
         z-index: 1;
         opacity: 0;
-        .transition(opacity 0.4s ease 2.2s);
     }
 
     #laptop-camera-on {
@@ -321,7 +326,6 @@ html[dir="rtl"] {
         height: 314px;
         z-index: 2;
         opacity: 0;
-        .transition(opacity 0.4s ease 2.2s);
     }
 
     #hello-panel {
@@ -442,6 +446,7 @@ html[dir="rtl"] {
         height: 313px;
 
         top: 10px;
+        left: 0;
     }
 
     #message-green1 {
@@ -451,9 +456,7 @@ html[dir="rtl"] {
         bottom: 0;
         right: 0;
 
-        right: 0;
         bottom: 10px;
-        //.transform(scale(0.72));
     }
 
     #message-blue2 {
@@ -463,7 +466,7 @@ html[dir="rtl"] {
         bottom: 0;
 
         top: 10px;
-        //.transform(scale(0.72));
+        left: 0;
     }
 
     #message-green2 {
@@ -472,9 +475,7 @@ html[dir="rtl"] {
         height: 320px;
         right: 33px;
 
-        right: 0;
         bottom: 10px;
-        //.transform(scale(0.76));
     }
 
     #message-blue3 {
@@ -484,7 +485,6 @@ html[dir="rtl"] {
         left: 32px;
 
         top: 10px;
-        //.transform(scale(0.76));
     }
 
     #message-green3 {
@@ -494,9 +494,7 @@ html[dir="rtl"] {
         right: 10px;
         bottom: 0;
 
-        right: 0;
         bottom: 10px;
-        //.transform(scale(0.75));
     }
 
     #message-blue4 {
@@ -507,7 +505,6 @@ html[dir="rtl"] {
         left: 35px;
 
         top: 10px;
-        //.transform(scale(0.73));
     }
 
     #message-green4 {
@@ -518,7 +515,6 @@ html[dir="rtl"] {
 
         right: 0;
         bottom: 10px;
-        //.transform(scale(0.77));
     }
 
     #message-blue-face {
@@ -542,14 +538,28 @@ html[dir="rtl"] {
         z-index: 4;
     }
 
+    &.animate.wide {
+        .anim-sprite {
+            background-image: url(/media/img/firefox/hello/sprite-animation.png);
+            background-repeat: no-repeat;
+        }
+    }
+
     &.animate {
+        background: none;
+
+        div {
+            display: block;
+        }
+
         #intro-face-bubble {
             .animation(intro-face-bubble 0.7s linear forwards 0.5s);
         }
 
         .intro-face-eye {
-            opacity: 1; // transition in
-            .animation(fade-out 0.4s ease forwards 2s);
+            @animations: fade-in 0.1s linear forwards 1.2s,
+                         fade-out 0.4s ease forwards 2s;
+            .animation(@animations);
         }
 
         .intro-face-eyelid {
@@ -562,17 +572,15 @@ html[dir="rtl"] {
             .animation(@animations);
         }
 
-        #laptop,
-        #browser {
-            opacity: 1; // transition handles in animation
-        }
-
         #laptop {
-            .animation(fade-out 0.4s ease forwards 5.4s);
+            @animations: fade-in 0.4s ease forwards 2.2s,
+                         fade-out 0.4s ease forwards 5.4s;
+            .animation(@animations);
         }
 
         #browser {
-            @animations: browser-out 0.4s ease forwards 5.5s,
+            @animations: fade-in 0.4s ease forwards 2.2s,
+                         browser-out 0.4s ease forwards 5.5s,
                          browser-in 0.6s ease forwards 8.8s;
             .animation(@animations);
         }
@@ -583,7 +591,7 @@ html[dir="rtl"] {
 
         #intro-face {
             @animations: intro-face-shrink 0.5s ease forwards 2s,
-                         fade-out 0.4s ease forwards 4.5s,
+                         fade-out 0.4s ease forwards 5.5s,
                          fade-in 0.6s ease forwards 8.8s;
             .animation(@animations);
         }
@@ -696,6 +704,28 @@ html[dir="rtl"] {
 
         #wordmark {
             .animation(wordmark-in 0.75s ease forwards 9s);
+        }
+    }
+}
+
+.js {
+    // by default, hide intro image and show animation when JS is enabled
+    #intro #intro-image {
+        display: none;
+    }
+
+    #animation-stage {
+        display: block;
+    }
+
+    // if browser can't do SVG animations, flip back to no-JS styles
+    body.no-animation {
+        #intro #intro-image {
+            display: block;
+        }
+
+        #animation-stage {
+            display: none;
         }
     }
 }
@@ -882,10 +912,6 @@ html[dir="rtl"] {
         .transform(scale(0) translateY(180px));
         opacity: 0;
     }
-    /*60% {
-        .transform(scale(1));
-        opacity: 1;
-    }*/
     100% {
         .transform(scale(0.75) translateY(0));
         opacity: 1;
@@ -920,7 +946,7 @@ html[dir="rtl"] {
         opacity: 1;
     }
     100% {
-        .transform(scale(0.2) translate(-110px, 130px));
+        .transform(scale(0.211) translate(-110px, 130px));
         opacity: 1;
     }
 }
@@ -1062,11 +1088,21 @@ html[dir="rtl"] {
     }
 
     // temporary placeholder
-    video {
+    #video-link {
+        display: block;
         width: 372px;
         height: 210px;
         background: #000;
     }
+}
+
+#video-modal-wrapper {
+    display: none;
+}
+
+#video-modal video {
+    width: 100%;
+    height: auto;
 }
 
 
@@ -1076,6 +1112,16 @@ html[dir="rtl"] {
 @media (-webkit-min-device-pixel-ratio: 1.5),
        (                min-resolution: 1.5dppx),
        (                min-resolution: 144dpi) {
+
+    #intro #intro-image {
+        background-image: url(/media/img/firefox/hello/hello-intro-high-res.png);
+        background-size: 447px 314px;
+    }
+
+    #animation-stage.animate.wide .anim-sprite {
+        background-image: url(/media/img/firefox/hello/sprite-animation-high-res.png);
+        background-size: 479px 3944px;
+    }
 
     #features li {
         background-image: url(/media/img/firefox/hello/sprite-features-high-res.png);
@@ -1171,7 +1217,7 @@ html[dir="rtl"] {
         }
 
         // temporary placeholder
-        video {
+        #video-link {
             width: 320px;
         }
     }
@@ -1220,7 +1266,13 @@ html[dir="rtl"] {
         padding-bottom: @baseLine;
 
         .container {
-            padding-top: 166px;
+            padding-top: 136px;
+        }
+
+        #intro-image {
+            width: 400px;
+            height: 263px;
+            background-size: 380px 266px;
         }
 
         .h1,
@@ -1230,6 +1282,227 @@ html[dir="rtl"] {
 
         .try-hello {
             margin-bottom: @baseLine;
+        }
+    }
+
+    // Animation
+
+    #animation-stage {
+        display: block;
+        width: 300px;
+        height: 150px;
+        margin: 0 auto 10px;
+
+        #intro-face-wrapper,
+        #laptop,
+        #browser {
+            display: none;
+        }
+
+        .message {
+            opacity: 0;
+            .transform(scale(0) translateY(100px));
+        }
+
+        #message-blue1 {
+            background-position: left -257px;
+            width: 140px;
+            height: 119px;
+        }
+
+        #message-green1 {
+            background-position: left -376px;
+            width: 140px;
+            height: 122px;
+        }
+
+        #message-blue2 {
+            background-position: left -498px;
+            width: 140px;
+            height: 120px;
+        }
+
+        #message-green2 {
+            background-position: left -618px;
+            width: 130px;
+            height: 121px;
+            right: 10px;
+        }
+
+        #message-blue3 {
+            background-position: left -739px;
+            width: 125px;
+            height: 118px;
+            left: 10px;
+        }
+
+        #message-green3 {
+            background-position: left -857px;
+            width: 140px;
+            height: 117px;
+        }
+
+        #message-blue4 {
+            background-position: left -974px;
+            width: 130px;
+            height: 122px;
+            left: 12px;
+        }
+
+        #message-green4 {
+            background-position: left -1096px;
+            width: 140px;
+            height: 118px;
+        }
+
+        .blue-face {
+            background-position: left top;
+            width: 140px;
+            height: 133px;
+        }
+
+        .green-face {
+            background-position: left -133px;
+            width: 130px;
+            height: 124px;
+        }
+
+        #message-blue-face {
+            left: 5px;
+            top: 0;
+        }
+
+        #message-green-face {
+            right: 5px;
+            bottom: 5px;
+        }
+
+        #wordmark {
+            background-position: left -1214px;
+            width: 300px;
+            height: 49px;
+            top: 48px;
+            left: 0;
+            opacity: 0;
+            .transform(translateY(10px));
+            z-index: 4;
+        }
+
+        &.animate.mini {
+            .anim-sprite {
+                background-image: url(/media/img/firefox/hello/sprite-animation-mini.png);
+                background-repeat: no-repeat;
+            }
+        }
+
+        &.animate {
+            #message-blue1 {
+                @animations: message-in-mini 0.4s ease forwards 0.2s,
+                             message-out-mini 0.3s ease-in forwards 0.7s;
+                .animation(@animations);
+            }
+
+            #message-green1 {
+                @animations: message-in-mini 0.4s ease forwards 0.4s,
+                             message-out-mini 0.3s ease-in forwards 0.9s;
+                .animation(@animations);
+            }
+
+            #message-blue2 {
+                @animations: message-in-mini 0.4s ease forwards 1s,
+                             message-out-mini 0.3s ease-in forwards 1.5s;
+                .animation(@animations);
+            }
+
+            #message-green2 {
+                @animations: message-in-mini 0.4s ease forwards 1.2s,
+                             message-out-mini 0.3s ease-in forwards 1.7s;
+                .animation(@animations);
+            }
+
+            #message-blue3 {
+                @animations: message-in-mini 0.4s ease forwards 1.8s,
+                             message-out-mini 0.3s ease-in forwards 2.3s;
+                .animation(@animations);
+            }
+
+            #message-green3 {
+                @animations: message-in-mini 0.4s ease forwards 2s,
+                             message-out-mini 0.3s ease-in forwards 2.5s;
+                .animation(@animations);
+            }
+
+            #message-blue4 {
+                @animations: message-in-mini 0.4s ease forwards 2.6s,
+                             message-out-mini 0.3s ease-in forwards 3.1s;
+                .animation(@animations);
+            }
+
+            #message-green4 {
+                @animations: message-in-mini 0.4s ease forwards 2.8s,
+                             message-out-mini 0.3s ease-in forwards 3.3s;
+                .animation(@animations);
+            }
+
+            #message-blue-face {
+                @animations: message-in-mini 0.4s ease forwards 3.4s,
+                             message-blue-face-shrink-mini 0.6s ease forwards 4.5s;
+                .animation(@animations);
+            }
+
+            #message-green-face {
+                @animations: message-in-mini 0.4s ease forwards 3.6s,
+                             message-green-face-out-mini 0.3s ease forwards 4.5s;
+                .animation(@animations);
+            }
+
+            #wordmark {
+                .animation(wordmark-in 0.75s ease forwards 4.6s);
+            }
+        }
+    }
+
+    @keyframes message-in-mini {
+        0% {
+            .transform(scale(0) translateY(100px));
+            opacity: 0;
+        }
+        100% {
+            .transform(scale(1) translateY(0));
+            opacity: 1;
+        }
+    }
+
+    @keyframes message-out-mini {
+        0% {
+            .transform(scale(1) translateY(0));
+            opacity: 1;
+        }
+        100% {
+            .transform(scale(0.7) translateY(-50px));
+            opacity: 0;
+        }
+    }
+
+    @keyframes message-green-face-out-mini {
+        0% {
+            .transform(scale(1) translateY(0));
+            opacity: 1;
+        }
+        100% {
+            .transform(scale(0.4) translateY(0));
+            opacity: 0;
+        }
+    }
+
+    @keyframes message-blue-face-shrink-mini {
+        0% {
+            .transform(scale(1) translateY(0));
+            opacity: 1;
+        }
+        100% {
+            .transform(scale(0.375) translate(-133px, 22px));
+            opacity: 1;
         }
     }
 
@@ -1317,9 +1590,22 @@ html[dir="rtl"] {
         }
 
         // temporary placeholder
-        video {
+        #video-link {
             width: 440px;
         }
+    }
+}
+
+/****************************************************************************/
+// @High resolution images for @retina-type displays
+// Mobile
+@media (max-width: @breakTablet) and (-webkit-min-device-pixel-ratio: 1.5),
+       (max-width: @breakTablet) and (        min-resolution: 1.5dppx),
+       (max-width: @breakTablet) and (        min-resolution: 144dpi) {
+
+    #animation-stage.animate.mini .anim-sprite {
+        background-image: url(/media/img/firefox/hello/sprite-animation-mini-high-res.png);
+        background-size: 300px 1263px;
     }
 }
 
@@ -1356,6 +1642,14 @@ html[dir="rtl"] {
         display: none;
     }
 
+    // Intro
+
+    #intro #intro-image {
+        width: 280px;
+        height: 197px;
+        background-size: 280px 197px;
+    }
+
     // Features
 
     #features {
@@ -1380,8 +1674,7 @@ html[dir="rtl"] {
     // Video
 
     #video {
-        // temporary placeholder
-        video {
+        #video-link {
             width: 300px;
         }
     }
