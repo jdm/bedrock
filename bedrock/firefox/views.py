@@ -482,6 +482,7 @@ class TourView(LatestFxView):
         # return a list to conform with original intention
         return [template]
 
+
 def hello(request):
     videos = {
         'de': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_german',

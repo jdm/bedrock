@@ -718,6 +718,7 @@ MINIFY_BUNDLES = {
             'js/firefox/hello.js',
         ),
         'firefox_hello_ie9': (
+            'js/libs/matchMedia.js',
             'js/libs/matchMedia.addListener.js',
         ),
         'firefox_privacy_tour': (

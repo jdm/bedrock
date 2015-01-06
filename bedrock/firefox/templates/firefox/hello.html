@@ -31,16 +31,15 @@
 
       {% block site_header_logo %}
         {{ super() }}
+        <div id="share-wrapper">
+          {% include 'firefox/includes/social-share.html' %}
+        </div>
       {% endblock %}
     </div>
   </header>
 {% endblock %}
 
 {% block content %}
-
-<div id="share-wrapper">
-  {% include 'firefox/includes/social-share.html' %}
-</div>
 
 <main role="main">
   <section id="intro">
@@ -209,7 +208,7 @@
       </div>
       <div class="cta-wrapper">
         <a id="video-link" href="{{ video_url }}.mp4">
-          donde esta mi screenshot?
+          <img src="{{ media('/img/firefox/hello/video-screenshot.jpg') }}" alt="{{ _('Get to know Hello') }}">
         </a>
       </div>
     </div>{# /.container #}

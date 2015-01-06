@@ -12,6 +12,7 @@
     var $videoContainer = $('#video-modal');
     var $video = $('#hello-video');
 
+    var supportsHTML5Video = !!document.createElement('video').canPlayType;
     var isWideViewport = $(window).width() >= 740;
     var mqIsWide;
     var isIE = /MSIE/.test(navigator.userAgent);
@@ -154,7 +155,14 @@
         e.preventDefault();
 
         Mozilla.Modal.createModal(this, $videoContainer, {
-            title: 'Hello'
+            title: 'Hello',
+            onCreate: function() {
+                if (supportsHTML5Video) {
+                    setTimeout(function() {
+                        $video[0].play();
+                    }, 500);
+                }
+            }
         });
     });
 
