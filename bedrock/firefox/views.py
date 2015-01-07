@@ -492,3 +492,22 @@ class HelloStartView(LatestFxView):
         incoming = self.request.GET.get('incomingConversation') or 'none'
         ctx['incoming_conversation'] = incoming
         return ctx
+
+
+def hello(request):
+    videos = {
+        'de': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_german',
+        'en-US': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_english',
+        'es-ES': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_spanish',
+        'id': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_indonesian',
+        'pt-BR': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_portugese',
+        'zh-TW': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_chinese'
+    }
+
+    video_url = videos.get(request.locale, '')
+
+    context = {
+        'video_url': video_url
+    }
+
+    return l10n_utils.render(request, 'firefox/hello.html', context)
