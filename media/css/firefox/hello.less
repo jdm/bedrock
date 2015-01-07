@@ -1122,22 +1122,22 @@ html[dir="rtl"] {
 
 @-webkit-keyframes message-blue-face-shrink {
     0% {
-        .transform(scale(0.75) translateY(0) rotate(0));
+        .transform(scale(0.75) translateY(0));
         opacity: 1;
     }
     100% {
-        .transform(scale(0.211) translate(-110px, 130px) rotate(1deg));
+        .transform(scale(0.211) translate(-110px, 130px));
         opacity: 1;
     }
 }
 
 @keyframes message-blue-face-shrink {
     0% {
-        .transform(scale(0.75) translateY(0) rotate(0));
+        .transform(scale(0.75) translateY(0));
         opacity: 1;
     }
     100% {
-        .transform(scale(0.211) translate(-110px, 130px) rotate(1deg));
+        .transform(scale(0.211) translate(-110px, 130px));
         opacity: 1;
     }
 }
@@ -1355,6 +1355,29 @@ html[dir="rtl"] {
     #features li {
         background-image: url(/media/img/firefox/hello/sprite-features-high-res.png);
         background-size: 1840px 120px;
+    }
+
+    // (seems to) remove scaling artifact by changing the scale by .001
+    @-webkit-keyframes message-blue-face-shrink {
+        0% {
+            .transform(scale(0.75) translateY(0));
+            opacity: 1;
+        }
+        100% {
+            .transform(scale(0.21) translate(-110px, 130px));
+            opacity: 1;
+        }
+    }
+
+    @keyframes message-blue-face-shrink {
+        0% {
+            .transform(scale(0.75) translateY(0));
+            opacity: 1;
+        }
+        100% {
+            .transform(scale(0.21) translate(-110px, 130px));
+            opacity: 1;
+        }
     }
 
 }
