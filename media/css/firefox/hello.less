@@ -40,7 +40,6 @@
 
     h2 {
         padding-top: 48px;
-        float: left;
         width: 185px;
     }
 }
@@ -100,14 +99,9 @@ main {
 // Share
 
 #share-wrapper {
-    position: absolute;
-    z-index: 10;
-    overflow: visible;
-    top: 70px;
-    left: 50%;
-    margin-left: 270px;
+    margin: 30px auto 0;
     width: 200px;
-    text-align: right;
+    text-align: center;
 
     .socialshare {
         & > div > a {
@@ -143,31 +137,11 @@ main {
         }
 
         #share-options {
-            left: auto;
-            right: 0;
             width: 85px;
 
             ul {
                 text-align: left;
             }
-        }
-    }
-}
-
-html[dir="rtl"] {
-    #masthead h2 {
-        float: none;
-    }
-
-    #share-wrapper {
-        margin-left: -460px;
-        text-align: left;
-
-        .socialshare #share-options {
-            right: auto;
-            left: 0;
-            margin-left: 0;
-            width: auto;
         }
     }
 }
@@ -180,6 +154,7 @@ html[dir="rtl"] {
 
     .container {
         padding-top: 116px; // compensate for pushing up under tabzilla
+        overflow: visible; // allow share widget to bleed over
     }
 
     .h1,
@@ -1406,14 +1381,6 @@ html[dir="rtl"] {
         .font-size(24px);
     }
 
-    #share-wrapper {
-        margin-left: 160px;
-    }
-
-    html[dir="rtl"] #share-wrapper {
-        margin-left: -350px;
-    }
-
     // Features
 
     #features {
@@ -1502,14 +1469,6 @@ html[dir="rtl"] {
 
     .h3 {
         .font-size(20px);
-    }
-
-    #share-wrapper {
-        margin-left: 20px;
-    }
-
-    html[dir="rtl"] #share-wrapper {
-        margin-left: -210px;
     }
 
     // Intro
@@ -1884,10 +1843,6 @@ html[dir="rtl"] {
 
     .h3 {
         .font-size(20px);
-    }
-
-    #share-wrapper {
-        display: none;
     }
 
     // Intro
