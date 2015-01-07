@@ -31,9 +31,6 @@
 
       {% block site_header_logo %}
         {{ super() }}
-        <div id="share-wrapper">
-          {% include 'firefox/includes/social-share.html' %}
-        </div>
       {% endblock %}
     </div>
   </header>
@@ -119,6 +116,10 @@
       </h2>
 
       <button class="try-hello" id="try-hello-intro">{{ _('Try Firefox Hello') }}</button>
+
+      <div id="share-wrapper">
+        {% include 'firefox/includes/social-share.html' %}
+      </div>
     </div>{# /.container #}
   </section>
 
