@@ -493,10 +493,4 @@ def hello(request):
         'zh-TW': 'https://videos.cdn.mozilla.net/uploads/FirefoxHello/firefoxhello_intro_chinese'
     }
 
-    video_url = videos.get(request.locale, '')
-
-    context = {
-        'video_url': video_url
-    }
-
-    return l10n_utils.render(request, 'firefox/hello.html', context)
+    return l10n_utils.render(request, 'firefox/hello.html', { 'video_url': videos.get(request.locale, '') })
