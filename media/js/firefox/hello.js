@@ -65,8 +65,10 @@
                     w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'StartConversation-NoTour']);
                     break;
                 case 'Loop:RoomURLCopied':
-                    console.log('RoomURLCopied!');
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'CopyLink-NoTour']);
+                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'URLCopied-NoTour']);
+                    break;
+                case 'Loop:RoomURLEmailed':
+                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'URLEmailed-NoTour']);
                     break;
             }
         });
