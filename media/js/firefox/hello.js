@@ -62,13 +62,13 @@
         Mozilla.UITour.observe(function(e) {
             switch (e) {
                 case 'Loop:ChatWindowOpened':
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'StartConversation-NoTour']);
+                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'StartConversation-NoTour']);
                     break;
                 case 'Loop:RoomURLCopied':
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'URLCopied-NoTour']);
+                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'URLCopied-NoTour']);
                     break;
                 case 'Loop:RoomURLEmailed':
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'URLEmailed-NoTour']);
+                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'URLEmailed-NoTour']);
                     break;
             }
         });
@@ -117,7 +117,7 @@
                                 Mozilla.UITour.hideMenu('loop');
                             });
 
-                            w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'Open']);
+                            w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'Open']);
                         });
                     });
 
@@ -129,17 +129,17 @@
                         handleVisibilityChange();
                     });
 
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'EligibleView']);
+                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'EligibleView']);
                 } else {
                     // if Hello is not in toolbar/menu, change footer button to link
                     // to a SUMO article and do some GA tracking
                     $('#try-hello-footer').attr('role', 'link').on('click', function() {
-                        w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'IneligibleClick'], function() {
+                        w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'IneligibleClick'], function() {
                             window.location.href = 'https://support.mozilla.org/kb/where-firefox-hello-button';
                         });
                     });
 
-                    w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'IneligibleView']);
+                    w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'IneligibleView']);
                 }
             });
         } else {
@@ -169,6 +169,6 @@
     });
 
     $video.on('play', function() {
-        w.gaTrack(['_trackEvent', 'hello interactions', 'productPage', 'PlayVideo']);
+        w.gaTrack(['_trackEvent', '/hello interactions', 'productPage', 'PlayVideo']);
     });
 })(window, window.jQuery, window.Modernizr);
